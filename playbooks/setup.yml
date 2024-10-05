@@ -1,0 +1,7 @@
+---
+- name: Setup host
+  hosts: all
+  roles:
+    - role: terminal
+    - role: desktop
+    - role: docker

@@ -1,0 +1,7 @@
+---
+- name: Install colima
+  tags:
+    - install
+  when: desktop_pkgs
+  ansible.builtin.package:
+    name: colima

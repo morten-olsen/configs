@@ -1,0 +1,5 @@
+desktops:
+  hosts:
+    zn-macbook:
+      contexts:
+        - zeronorth

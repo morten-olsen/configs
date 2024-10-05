@@ -1,0 +1,22 @@
+- name: Install core dependencies
+  tags: always
+  ansible.builtin.package:
+    name:
+      - zsh
+
+- name: Create group
+  when: not mac_os
+  tags: always
+  ansible.builtin.group:
+    name: "{{ username }}"
+    state: present
+
+- name: Create user
+  when: not mac_os
+  tags: always
+  ansible.builtin.user:
+    name: "{{ username }}"
+    update_password: "on_create"
+    create_home: yes
+    shell: /usr/bin/zsh
+    group: "{{ username }}"

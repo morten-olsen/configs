@@ -1,0 +1,10 @@
+[user]
+	email = morten@olsen.pro
+	name = Morten Olsen
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaIAP/ZJ7+7jeR44e1yIJjfQAB6MN351LDKJAXVF62P
+
+[url "git@github-private:morten-olsen/"]
+	insteadOf = https://github.com/morten-olsen/
+
+[url "ssh://git@giteaa.olsen.cloud:2202/"]
+	insteadOf = ssh://git@gitea.olsen.cloud:2202/

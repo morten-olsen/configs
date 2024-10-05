@@ -1,0 +1,33 @@
+---
+- name: "Unload vars : {{ context }}"
+  ansible.builtin.include_vars: ../vars/empty.yml
+  tags:
+    - install
+
+- name: "Load vars : {{ context }}"
+  ansible.builtin.include_vars: "{{ item }}"
+  tags:
+    - install
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yml
+      paths: ../vars/{{ context }}
+      skip: true
+
+- name: "Install dependencies : {{ context }}"
+  tags:
+    - install
+  when: terminal_pkgs
+  ansible.builtin.package:
+    name: "{{ terminal_pkgs }}"
+
+- name: "Install casks : {{ context }}"
+  tags:
+    - install
+  when: terminal_casks
+  community.general.homebrew_cask:
+    name: "{{ terminal_casks }}"
+    state: installed

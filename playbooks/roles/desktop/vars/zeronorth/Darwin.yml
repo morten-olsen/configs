@@ -1,0 +1,5 @@
+---
+desktop_casks:
+  - slack
+  - notion
+  - aws-vpn-client

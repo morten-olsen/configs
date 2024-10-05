@@ -1,0 +1,5 @@
+name: system
+services:
+  playground:
+    image: ghcr.io/morten-olsen/system-playground
+    build: .

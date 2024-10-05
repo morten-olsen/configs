@@ -1,0 +1,35 @@
+---
+- name: Install context dependencies
+  ansible.builtin.include_tasks: install.yml
+  loop: "{{ contexts }}"
+  loop_control:
+    loop_var: context
+  tags:
+    - config
+
+- name: Configure contexts
+  ansible.builtin.include_tasks: config.yml
+  loop: "{{ contexts }}"
+  loop_control:
+    loop_var: context
+  tags:
+    - config
+
+- name: Install node and set version
+  tags:
+    - config
+  register: nodeinstall
+  ansible.builtin.shell: source {{ home }}/.nvm/nvm.sh && nvm install 22
+  changed_when: "'is already installed' not in nodeinstall.stderr"
+  args:
+    executable: /bin/bash
+
+- name: Configure neovim
+  tags:
+    - config
+  ansible.builtin.git:
+    repo: https://github.com/morten-olsen/nvim
+    dest: "{{ home }}/.config/nvim"
+    accept_newhostkey: true
+    clone: true
+    update: true

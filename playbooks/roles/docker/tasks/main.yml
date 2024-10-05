@@ -1,0 +1,6 @@
+---
+- name: Install on MacOS
+  when: mac_os
+  tags:
+    - install
+  ansible.builtin.include_tasks: macos.yml
