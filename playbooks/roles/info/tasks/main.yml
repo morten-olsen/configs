@@ -2,7 +2,7 @@
   tags: always
   ansible.builtin.set_fact:
     username: alice
-    home: /Users/alice
+    home: "{{ ansible_env.HOME }}"
     use_become: true
     mac_os: "{{ ansible_distribution == 'MacOSX' }}"
     contexts: "{{ ['default'] + (contexts | default([])) }}"

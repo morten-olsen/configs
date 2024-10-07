@@ -1,16 +1,4 @@
 ---
-- name: Copy config {{ context }}
-  tags:
-    - config
-  ansible.builtin.file:
-    path: "{{ home }}/{{ item.path }}"
-    state: directory
-  with_community.general.filetree:
-    - ../files/{{ context }}
-  loop_control:
-    label: "{{ item.path }}"
-  when: item.state == 'directory'
-
 - name: "Copy templates : {{ context }}"
   tags:
     - config
@@ -24,7 +12,7 @@
     label: "{{ item.path }}"
   when: item.state == 'file'
 
-- name: Copy config {{ context }}
+- name: "Copy config : {{ context }}"
   tags:
     - config
   ansible.builtin.copy:

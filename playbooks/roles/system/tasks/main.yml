@@ -1,11 +1,6 @@
-- name: Install core dependencies
-  tags: always
-  ansible.builtin.package:
-    name:
-      - zsh
-
 - name: Create group
   when: not mac_os
+  become: true
   tags: always
   ansible.builtin.group:
     name: "{{ username }}"
@@ -13,10 +8,10 @@
 
 - name: Create user
   when: not mac_os
+  become: true
   tags: always
   ansible.builtin.user:
     name: "{{ username }}"
     update_password: "on_create"
     create_home: yes
-    shell: /usr/bin/zsh
     group: "{{ username }}"

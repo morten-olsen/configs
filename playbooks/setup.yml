@@ -1,6 +1,6 @@
 ---
 - name: Setup host
-  hosts: all
+  hosts: desktops
   roles:
     - role: terminal
     - role: desktop

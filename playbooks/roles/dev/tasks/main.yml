@@ -1,0 +1,16 @@
+---
+- name: Install context dependencies
+  ansible.builtin.include_tasks: install.yml
+  loop: "{{ contexts }}"
+  loop_control:
+    loop_var: context
+  tags:
+    - config
+
+- name: Configure contexts
+  ansible.builtin.include_tasks: config.yml
+  loop: "{{ contexts }}"
+  loop_control:
+    loop_var: context
+  tags:
+    - config

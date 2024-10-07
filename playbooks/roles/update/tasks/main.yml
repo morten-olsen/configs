@@ -1,0 +1,4 @@
+- name: Update neovim lazy
+  ansible.builtin.run: 'nvim --headless "+Lazy! sync" +qa'
+  args:
+    executable: /bin/bash

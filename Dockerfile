@@ -1,9 +1,8 @@
-FROM debian:bookworm
+FROM fedora
 WORKDIR /app
-RUN apt-get update && apt-get install -y \
-  python3 \
-  python3-pip \
-  && rm -rf /var/lib/apt/lists/*
-COPY requirements.txt /app
-RUN pip3 install -r requirements.txt
+RUN yum update -y && yum install -y \
+  ansible
+COPY requirements.yml /app
+RUN ansible-galaxy collection install -r requirements.yml
 COPY . /app
+RUN ansible-playbook /app/playbooks/image.yml

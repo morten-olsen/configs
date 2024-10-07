@@ -1,3 +1,8 @@
+images:
+  hosts:
+    docker-dev:
+      contexts:
+        - privat
 desktops:
   hosts:
     zn-macbook:

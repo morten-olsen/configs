@@ -1,0 +1,5 @@
+---
+- name: Setup host
+  hosts: localhost
+  roles:
+    - role: terminal

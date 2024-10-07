@@ -2,3 +2,4 @@
 dependencies:
   - role: info
   - role: system
+  # - elliotweiser.osx-command-line-tools
