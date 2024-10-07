@@ -1,0 +1,30 @@
+- name: Download starship
+  tags: always
+  ansible.builtin.get_url:
+    url: "{{ download_url }}"
+    dest: "{{ download_dir }}"
+
+- name: Create dir
+  tags: always
+  ansible.builtin.file:
+    path: "{{ unpack_dir }}"
+    state: directory
+
+- name: Extract starship
+  tags: always
+  ansible.builtin.unarchive:
+    src: "{{ download_dir }}"
+    dest: "{{ unpack_dir }}"
+
+- name: Ensure dir
+  tags: always
+  ansible.builtin.file:
+    path: "{{ home }}/.scripts"
+    state: directory
+- name: Move bin
+  tags: always
+  ansible.builtin.copy:
+    remote_src: true
+    mode: 755
+    src: "{{ unpack_file }}"
+    dest: "{{ home }}/.scripts/atuin"

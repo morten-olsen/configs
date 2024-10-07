@@ -1,6 +1,6 @@
 ---
 terminal_pkgs:
-  #- atuin
+  # - atuin
   - bat
   - eza
   - direnv
@@ -10,7 +10,7 @@ terminal_pkgs:
   - ripgrep
   - neovim
   - gh
-  #- starship
+  # - starship
   - tmux
   - zoxide
   - git

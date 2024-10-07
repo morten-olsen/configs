@@ -1,0 +1,19 @@
+- name: Clone nvm
+  tags:
+    - install
+  ansible.builtin.git:
+    accept_newhostkey: true
+    clone: true
+    force: true
+    recursive: false
+    repo: https://github.com/nvm-sh/nvm
+    dest: "{{ home }}/.nvm"
+
+- name: Install node and set version
+  tags:
+    - config
+  register: nodeinstall
+  ansible.builtin.shell: source {{ home }}/.nvm/nvm.sh && nvm install 22
+  changed_when: "'is already installed' not in nodeinstall.stderr"
+  args:
+    executable: /bin/bash

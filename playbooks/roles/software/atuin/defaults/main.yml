@@ -1,0 +1,14 @@
+---
+mirror: "https://github.com/atuinsh/atuin/releases/download/"
+version: v18.3.0
+arch_map:
+  arm64: aarch64
+  aarch64: aarch64
+system_map:
+  Darwin: apple-darwin
+  Linux: unknown-linux-gnu
+
+atuin_url: "{{ mirror }}/{{version}}/atuin-{{ arch_map[ansible_architecture] }}-{{ system_map[ansible_system] }}.tar.gz"
+download_dir: "/tmp/atuin.tar.gz"
+unpack_dir: "/tmp/atuin"
+unpack_file: "{{ unpack_dir }}/atuin-{{ arch_map[ansible_architecture] }}-{{ system_map[ansible_system] }}/atuin"
