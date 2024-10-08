@@ -15,3 +15,11 @@
     update_password: "on_create"
     create_home: yes
     group: "{{ username }}"
+
+- name: Ensure home
+  tags: always
+  become: true
+  ansible.builtin.file:
+    path: "{{ home }}"
+    state: directory
+    owner: "{{ username }}"

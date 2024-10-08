@@ -5,11 +5,22 @@
   ansible.builtin.template:
     src: "../templates/gitconfig.context.j2"
     dest: "{{ context.path }}/.gitconfig"
+    owner: "{{ username }}"
     mode: "644"
   vars:
     git: "{{ context.git }}"
     name: "{{ name }}"
   when: "'git' in context"
+
+- name: Ensure dir
+  tags:
+    - git
+    - config
+  ansible.builtin.file:
+    path: "{{ context.path }}"
+    state: directory
+    owner: "{{ username }}"
+    mode: "0700"
 
 - name: Setup context ssh config
   tags:
@@ -18,6 +29,7 @@
   ansible.builtin.template:
     src: "../templates/sshconfig.context.j2"
     dest: "{{ home }}/.ssh/config.d/git-{{ name }}"
+    owner: "{{ username }}"
     mode: "644"
   vars:
     name: "{{ name }}"
@@ -30,6 +42,7 @@
   ansible.builtin.file:
     path: "{{ home }}/.ssh/keys"
     state: directory
+    owner: "{{ username }}"
     mode: "0700"
 
 - name: Setup context public key
@@ -39,5 +52,6 @@
   ansible.builtin.copy:
     content: "{{ context.git.signing_key }}"
     dest: "{{ home }}/.ssh/keys/github-{{ name }}.pub"
+    owner: "{{ username }}"
     mode: "0644"
   when: "'git' in context and 'signing_key' in context.git"

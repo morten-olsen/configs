@@ -14,6 +14,7 @@
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
+    owner: "{{ username }}"
     state: directory
   with_community.general.filetree:
     - ../files
@@ -21,7 +22,7 @@
     label: "{{ item.path }}"
   when: item.state == 'directory'
 
-- name: Copy config {{ context }}
+- name: Copy config
   tags:
     - nvim
     - config
@@ -29,6 +30,7 @@
     src: "{{ item.src }}"
     dest: "{{ home }}/{{ item.path }}"
     mode: "{{ item.mode }}"
+    owner: "{{ username }}"
   with_community.general.filetree:
     - ../files
   loop_control:
@@ -39,6 +41,8 @@
   tags:
     - config
     - nvim
+  become: true
+  become_user: "{{ username }}"
   ansible.builtin.git:
     repo: https://github.com/morten-olsen/nvim
     dest: "{{ home }}/Projects/private/nvim"
@@ -53,6 +57,7 @@
     - nvim
   ansible.builtin.file:
     path: "{{ home }}/.config"
+    owner: "{{ username }}"
     state: directory
     mode: "0755"
 
@@ -63,12 +68,15 @@
   ansible.builtin.file:
     src: "{{ home }}/Projects/private/nvim"
     dest: "{{ home }}/.config/nvim"
+    owner: "{{ username }}"
     state: link
 
 - name: Prepare neovim
   tags:
     - config
     - nvim
+  become: true
+  become_user: "{{ username }}"
   register: nviminstall
   changed_when: nviminstall.stdout != ''
   ansible.builtin.shell: nvim --headless +q

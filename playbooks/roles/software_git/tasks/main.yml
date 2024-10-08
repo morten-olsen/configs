@@ -16,6 +16,7 @@
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
+    owner: "{{ username }}"
     state: directory
   with_community.general.filetree:
     - ../files
@@ -30,6 +31,7 @@
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ home }}/{{ item.path }}"
+    owner: "{{ username }}"
     mode: "{{ item.mode }}"
   with_community.general.filetree:
     - ../files
@@ -44,6 +46,7 @@
   ansible.builtin.template:
     src: "../templates/gitconfig.j2"
     dest: "{{ home }}/.gitconfig"
+    owner: "{{ username }}"
     mode: "644"
 
 - name: Setup contexts

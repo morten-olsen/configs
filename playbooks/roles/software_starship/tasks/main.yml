@@ -22,7 +22,8 @@
   tags: always
   ansible.builtin.file:
     mode: "0755"
-    path: "{{ home }}/.scripts"
+    path: "{{ home }}/.local/bin"
+    owner: "{{ username }}"
     state: directory
 
 - name: Move bin
@@ -30,5 +31,6 @@
   ansible.builtin.copy:
     remote_src: true
     mode: "0755"
+    owner: "{{ username }}"
     src: "{{ software_starship_unpack_file }}"
     dest: "{{ home }}/.local/bin/starship"

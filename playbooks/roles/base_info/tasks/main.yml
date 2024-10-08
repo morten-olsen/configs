@@ -2,7 +2,7 @@
   tags: always
   ansible.builtin.set_fact:
     username: alice
-    home: "{{ ansible_env.HOME }}"
+    home: "/home/alice"
     use_become: true
     mac_os: "{{ ansible_distribution == 'MacOSX' }}"
 
@@ -11,3 +11,4 @@
   when: mac_os
   ansible.builtin.set_fact:
     install_with_root: false
+    home: "/Users/alice"

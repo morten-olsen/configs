@@ -24,6 +24,7 @@
   ansible.builtin.file:
     path: "{{ home }}/.local/bin"
     mode: "0755"
+    owner: "{{ username }}"
     state: directory
 
 - name: Move bin
@@ -46,6 +47,7 @@
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
+    owner: "{{ username }}"
     state: directory
   with_community.general.filetree:
     - ../files
@@ -60,6 +62,7 @@
     src: "{{ item.src }}"
     dest: "{{ home }}/{{ item.path }}"
     mode: "{{ item.mode }}"
+    owner: "{{ username }}"
   with_community.general.filetree:
     - ../files
   loop_control:
