@@ -1,5 +1,10 @@
 ---
-- name: "Load vars"
+- name: "Unload vars : {{ context }}"
+  ansible.builtin.include_vars: ../vars/empty.yml
+  tags:
+    - install
+
+- name: "Load vars : {{ context }}"
   ansible.builtin.include_vars: "{{ item }}"
   tags:
     - install
@@ -9,10 +14,10 @@
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
         - default.yml
-      paths: ../vars
+      paths: ../vars/{{ context }}
       skip: true
 
-- name: "Install dependencies"
+- name: "Install dependencies : {{ context }}"
   tags:
     - install
   when: terminal_pkgs

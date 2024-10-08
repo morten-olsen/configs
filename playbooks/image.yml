@@ -1,6 +1,8 @@
 ---
 - name: Setup host
   hosts: localhost
+  vars:
+    contexts: []
   roles:
     - role: env_terminal
     - role: env_develop

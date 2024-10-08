@@ -1,6 +1,9 @@
 FROM fedora
-WORKDIR /app
-RUN yum update -y && yum install -y \
+RUN dnf update -y && dnf install -y \
   ansible
-COPY . /app
-RUN ansible-playbook /app/playbooks/image.yml
+RUN useradd -m -s /bin/bash -d /home/alice alice
+COPY . /opt/setup
+RUN ansible-playbook /opt/setup/playbooks/image.yml
+RUN mkdir /workspace && chown alice:alice /workspace
+USER dev
+WORKDIR /workspace

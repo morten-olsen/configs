@@ -4,6 +4,7 @@ software_atuin_version: v18.3.0
 software_atuin_arch_map:
   arm64: aarch64
   aarch64: aarch64
+  x86_64: x86_64
 software_atuin_system_map:
   Darwin: apple-darwin
   Linux: unknown-linux-gnu

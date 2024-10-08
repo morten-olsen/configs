@@ -4,6 +4,7 @@ software_starship_version: v1.20.1
 software_starship_arch_map:
   arm64: aarch64
   aarch64: aarch64
+  x86_64: x86_64
 software_starship_system_map:
   Darwin: apple-darwin
   Linux: unknown-linux-musl
