@@ -1,0 +1,51 @@
+---
+- name: Install dependencies
+  ansible.builtin.package:
+    name:
+      - git
+
+- name: Clone nvm
+  tags:
+    - install
+  ansible.builtin.git:
+    accept_newhostkey: true
+    clone: true
+    force: true
+    recursive: false
+    repo: https://github.com/nvm-sh/nvm
+    dest: "{{ home }}/.nvm"
+
+- name: Install node and set version
+  tags:
+    - config
+  register: nodeinstall
+  ansible.builtin.shell: source {{ home }}/.nvm/nvm.sh && nvm install 22
+  changed_when: "'is already installed' not in nodeinstall.stderr"
+  args:
+    executable: /bin/bash
+
+- name: Setup config dirctories
+  tags:
+    - config
+  ansible.builtin.file:
+    mode: "{{ item.mode }}"
+    path: "{{ home }}/{{ item.path }}"
+    state: directory
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'directory'
+
+- name: Copy config {{ context }}
+  tags:
+    - config
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ home }}/{{ item.path }}"
+    mode: "{{ item.mode }}"
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file'

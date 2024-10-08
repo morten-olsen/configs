@@ -1,0 +1,60 @@
+---
+- name: Download atuin
+  tags: always
+  ansible.builtin.get_url:
+    url: "{{ software_atuin_download_url }}"
+    dest: "{{ software_atuin_download_dir }}"
+    mode: "0600"
+
+- name: Create dir
+  tags: always
+  ansible.builtin.file:
+    path: "{{ software_atuin_unpack_dir }}"
+    mode: "0755"
+    state: directory
+
+- name: Unpacking atuin
+  tags: always
+  ansible.builtin.unarchive:
+    src: "{{ software_atuin_download_dir }}"
+    dest: "{{ software_atuin_unpack_dir }}"
+
+- name: Ensure dir
+  tags: always
+  ansible.builtin.file:
+    path: "{{ home }}/.scripts"
+    mode: "0755"
+    state: directory
+- name: Move bin
+  tags: always
+  ansible.builtin.copy:
+    remote_src: true
+    mode: "0755"
+    src: "{{ software_atuin_unpack_file }}"
+    dest: "{{ home }}/.local/bin/atuin"
+
+- name: Setup config dirctories
+  tags:
+    - config
+  ansible.builtin.file:
+    mode: "{{ item.mode }}"
+    path: "{{ home }}/{{ item.path }}"
+    state: directory
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'directory'
+
+- name: Copy config {{ context }}
+  tags:
+    - config
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ home }}/{{ item.path }}"
+    mode: "{{ item.mode }}"
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file'

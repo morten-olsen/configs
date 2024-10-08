@@ -1,0 +1,56 @@
+---
+- name: Install dependencies
+  tags:
+    - install
+  ansible.builtin.package:
+    name:
+      - neovim
+      - git
+
+- name: Setup config dirctories
+  tags:
+    - config
+  ansible.builtin.file:
+    mode: "{{ item.mode }}"
+    path: "{{ home }}/{{ item.path }}"
+    state: directory
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'directory'
+
+- name: Copy config {{ context }}
+  tags:
+    - config
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ home }}/{{ item.path }}"
+    mode: "{{ item.mode }}"
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file'
+
+- name: Configure neovim
+  tags:
+    - config
+    - nvim
+  ansible.builtin.git:
+    repo: https://github.com/morten-olsen/nvim
+    dest: "{{ home }}/.config/nvim"
+    accept_newhostkey: true
+    clone: true
+    update: true
+    force: true
+
+- name: Prepare neovim
+  tags:
+    - config
+    - nvim
+  register: nviminstall
+  changed_when: nviminstall.stdout != ''
+  ansible.builtin.shell: nvim --headless +q
+  args:
+    executable: /bin/bash

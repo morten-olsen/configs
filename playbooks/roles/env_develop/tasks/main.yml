@@ -1,0 +1,20 @@
+---
+- name: "Load vars : {{ context }}"
+  ansible.builtin.include_vars: "{{ item }}"
+  tags:
+    - install
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yml
+      paths: ../vars
+      skip: true
+
+- name: "Install dependencies"
+  tags:
+    - install
+  when: env_develop_pkgs
+  ansible.builtin.package:
+    name: "{{ env_develop_pkgs }}"

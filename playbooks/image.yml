@@ -2,4 +2,5 @@
 - name: Setup host
   hosts: localhost
   roles:
-    - role: terminal
+    - role: env_terminal
+    - role: env_develop

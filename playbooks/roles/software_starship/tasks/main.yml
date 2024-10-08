@@ -1,0 +1,34 @@
+- name: Download starship
+  tags: always
+  ansible.builtin.get_url:
+    mode: "0600"
+    url: "{{ software_starship_download_url }}"
+    dest: "{{ software_starship_download_dir }}"
+
+- name: Create dir
+  tags: always
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ software_starship_unpack_dir }}"
+    state: directory
+
+- name: Extract starship
+  tags: always
+  ansible.builtin.unarchive:
+    src: "{{ software_starship_download_dir }}"
+    dest: "{{ software_starship_unpack_dir }}"
+
+- name: Ensure dir
+  tags: always
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ home }}/.scripts"
+    state: directory
+
+- name: Move bin
+  tags: always
+  ansible.builtin.copy:
+    remote_src: true
+    mode: "0755"
+    src: "{{ software_starship_unpack_file }}"
+    dest: "{{ home }}/.local/bin/starship"

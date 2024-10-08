@@ -1,0 +1,17 @@
+- name: Show info
+  debug:
+    msg:
+      user: "{{ ansible_user }}"
+      home: "{{ ansible_env.HOME }}"
+      distribution: "{{ ansible_distribution }}"
+      family: "{{ ansible_os_family}}"
+      arch: "{{ ansible_architecture }}"
+
+- name: Setting host facts
+  tags: always
+  ansible.builtin.set_fact:
+    username: alice
+    home: "{{ ansible_env.HOME }}"
+    use_become: true
+    mac_os: "{{ ansible_distribution == 'MacOSX' }}"
+    contexts: "{{ ['default'] + (contexts | default([])) }}"

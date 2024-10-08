@@ -1,0 +1,11 @@
+---
+dependencies:
+  - role: base_info
+  - role: software_git
+  - role: software_zsh
+  - role: software_starship
+  - role: software_tmux
+  - role: software_ssh
+  - role: software_nvm
+  - role: software_nvim
+  - role: software_atuin

@@ -3,8 +3,19 @@ images:
     docker-dev:
       contexts:
         - privat
+android:
+  hosts:
+    pixel9:
+      ansible_host: 192.168.3.7
+      ansible_connection: ssh
+      ansible_port: 8022
+      ansible_user: u0_a200
 desktops:
   hosts:
     zn-macbook:
+      ansible_host: 192.168.3.3
+      ansible_connection: ssh
+      ansible_port: 22
+      ansible_user: alice
       contexts:
         - zeronorth

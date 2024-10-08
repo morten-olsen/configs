@@ -1,7 +1,15 @@
 ---
-- name: Setup host
+- name: Setup desktop
   hosts: desktops
   roles:
-    - role: terminal
-    - role: desktop
-    - role: docker
+    - role: env_terminal
+    - role: env_develop
+    - role: server_ssh
+    - role: env_desktop
+
+- name: Setup android
+  hosts: android
+  roles:
+    - role: env_terminal
+    - role: env_develop
+    - role: server_ssh

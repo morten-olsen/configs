@@ -11,7 +11,7 @@ fi
 
 echo "Setting up $MACHINE_NAME"
 ansible-playbook -i inventory.yml playbooks/setup.yml \
-	--extra-vars "ansible_python_interpreter=$(which python)" \
+	--connection=local \
 	--inventory "$MACHINE_NAME," \
 	--limit "$MACHINE_NAME" \
 	$@ \
