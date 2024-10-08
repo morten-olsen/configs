@@ -22,9 +22,10 @@
 - name: Ensure dir
   tags: always
   ansible.builtin.file:
-    path: "{{ home }}/.scripts"
+    path: "{{ home }}/.local/bin"
     mode: "0755"
     state: directory
+
 - name: Move bin
   tags: always
   ansible.builtin.copy:
@@ -32,6 +33,12 @@
     mode: "0755"
     src: "{{ software_atuin_unpack_file }}"
     dest: "{{ home }}/.local/bin/atuin"
+
+- name: Cleanup
+  tags: always
+  ansible.builtin.file:
+    path: "{{ software_atuin_unpack_file }}"
+    state: absent
 
 - name: Setup config dirctories
   tags:

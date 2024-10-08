@@ -1,0 +1,4 @@
+{% for key in env %}
+export {{ key }}="{{ env[key] }}"
+{% endfor %}
+

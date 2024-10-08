@@ -1,8 +1,3 @@
-[gpg]
-  format = ssh
-
-[gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 
 [alias]
   graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%C(blue)%x20(%ce)%x20%C(cyan)[gpg:%GK%x20%G?]%C(reset)%n%x20%s%n"
@@ -20,8 +15,6 @@
 
 [difftool "nvimdiff"]
 	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[commit]
-  gpgsign = true
 [url "https://"]
 	insteadOf = git://
 
@@ -43,11 +36,13 @@
 	process = git-lfs filter-process
 	required = true
 
-[includeIf "gitdir:~/Projects/zeronorth/"]
-  path = ~/Projects/zeronorth/.gitconfig
-
-[includeIf "gitdir:~/Projects/private/"]
-  path = ~/Projects/private/.gitconfig
 [push]
 	autoSetupRemote = true
+
+{% for key in contexts %}
+{% if 'git' in contexts[key] %}
+[includeIf "gitdir:{{ contexts[key].path }}/"]
+  path = {{ contexts[key].path }}/.gitconfig
+{% endif %}
+{% endfor %}
 

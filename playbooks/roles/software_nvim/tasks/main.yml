@@ -9,6 +9,7 @@
 
 - name: Setup config dirctories
   tags:
+    - nvim
     - config
   ansible.builtin.file:
     mode: "{{ item.mode }}"
@@ -22,6 +23,7 @@
 
 - name: Copy config {{ context }}
   tags:
+    - nvim
     - config
   ansible.builtin.copy:
     src: "{{ item.src }}"
@@ -39,11 +41,29 @@
     - nvim
   ansible.builtin.git:
     repo: https://github.com/morten-olsen/nvim
-    dest: "{{ home }}/.config/nvim"
+    dest: "{{ home }}/Projects/private/nvim"
     accept_newhostkey: true
     clone: true
     update: true
     force: true
+
+- name: Ensure dir
+  tags:
+    - config
+    - nvim
+  ansible.builtin.file:
+    path: "{{ home }}/.config"
+    state: directory
+    mode: "0755"
+
+- name: Setup nvim link
+  tags:
+    - config
+    - nvim
+  ansible.builtin.file:
+    src: "{{ home }}/Projects/private/nvim"
+    dest: "{{ home }}/.config/nvim"
+    state: link
 
 - name: Prepare neovim
   tags:

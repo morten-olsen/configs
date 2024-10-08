@@ -1,0 +1,6 @@
+host github-{{ name }}
+  hostname ssh.github.com
+  user git
+  port 443
+  IdentityFile ~/.ssh/keys/github-{{ name }}.pub
+  IdentitiesOnly yes

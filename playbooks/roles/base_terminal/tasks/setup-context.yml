@@ -1,0 +1,12 @@
+- name: Setup context env
+  tags:
+    - git
+    - config
+  ansible.builtin.template:
+    src: "../templates/envrc.context.j2"
+    dest: "{{ context.path }}/.envrc"
+    mode: "600"
+  vars:
+    env: "{{ context.env}}"
+    name: "{{ name }}"
+  when: "'env' in context"

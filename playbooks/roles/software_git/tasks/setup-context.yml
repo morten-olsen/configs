@@ -1,0 +1,43 @@
+- name: Setup context git config
+  tags:
+    - git
+    - config
+  ansible.builtin.template:
+    src: "../templates/gitconfig.context.j2"
+    dest: "{{ context.path }}/.gitconfig"
+    mode: "644"
+  vars:
+    git: "{{ context.git }}"
+    name: "{{ name }}"
+  when: "'git' in context"
+
+- name: Setup context ssh config
+  tags:
+    - git
+    - config
+  ansible.builtin.template:
+    src: "../templates/sshconfig.context.j2"
+    dest: "{{ home }}/.ssh/config.d/git-{{ name }}"
+    mode: "644"
+  vars:
+    name: "{{ name }}"
+  when: "'git' in context and 'signing_key' in context.git"
+
+- name: Ensure dir
+  tags:
+    - git
+    - config
+  ansible.builtin.file:
+    path: "{{ home }}/.ssh/keys"
+    state: directory
+    mode: "0700"
+
+- name: Setup context public key
+  tags:
+    - git
+    - config
+  ansible.builtin.copy:
+    content: "{{ context.git.signing_key }}"
+    dest: "{{ home }}/.ssh/keys/github-{{ name }}.pub"
+    mode: "0644"
+  when: "'git' in context and 'signing_key' in context.git"

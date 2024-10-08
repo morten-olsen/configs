@@ -1,0 +1,28 @@
+[user]
+	email = {{ git.email }}
+	name = {{ git.name }}
+{% if 'signing_key' in git %}
+  signingkey = {{ git.signing_key }}
+
+[commit]
+  gpgsign = true
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+{% endif %}
+
+{% if 'replacements' in git %}
+{% for replacement in git.replacements %}
+
+[url "{{ replacement.use }}"]
+	insteadOf = "{{ replacement.instead_of }}"
+{% endfor %}
+{% endif %}
+
+
+[url "git@github-{{name}}:"]
+  insteadOf = https://github.com/
+

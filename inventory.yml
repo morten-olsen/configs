@@ -11,11 +11,30 @@ android:
       ansible_port: 8022
       ansible_user: u0_a200
 desktops:
+  vars:
+    contexts:
+      private:
+        path: ~/Projects/private
+        git:
+          email: fbtijfdq@void.black
+          name: Morten Olsen
+          signing_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaIAP/ZJ7+7jeR44e1yIJjfQAB6MN351LDKJAXVF62P
+          replacements:
+            - use: "ssh://git@giteaa.olsen.cloud:2202/"
+              instead_of: "ssh://git@gitea.olsen.cloud:2202/"
+
+      zeronorth:
+        path: ~/Projects/zeronorth
+        env:
+          NODE_AUTH_TOKEN: "op://jpksggxxmcuwnbwkooktr3iqcy/ut3yag6r7y4bsfrztahp7pcc6q/password"
+          AWS_PROFILE: "zeronorth"
+        git:
+          email: morten.olsen@zeronorth.com
+          name: Morten Olsen
+          signing_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDbZITpz5QrVIxPn9gKVWMPK+3W3YZZGszFOQvO/h7M
   hosts:
     zn-macbook:
-      ansible_host: 192.168.3.3
-      ansible_connection: ssh
-      ansible_port: 22
-      ansible_user: alice
-      contexts:
-        - zeronorth
+      # ansible_host: 192.168.3.3
+      # ansible_connection: ssh
+      # ansible_port: 22
+      # ansible_user: alice

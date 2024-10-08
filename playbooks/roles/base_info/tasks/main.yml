@@ -1,8 +1,13 @@
-- name: Setting host facts
+- name: Setting generic facts
   tags: always
   ansible.builtin.set_fact:
     username: alice
     home: "{{ ansible_env.HOME }}"
     use_become: true
     mac_os: "{{ ansible_distribution == 'MacOSX' }}"
-    contexts: "{{ ['default'] + (contexts | default([])) }}"
+
+- name: Setting macos facts
+  tags: always
+  when: mac_os
+  ansible.builtin.set_fact:
+    install_with_root: false

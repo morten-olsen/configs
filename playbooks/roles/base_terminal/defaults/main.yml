@@ -1,3 +1,4 @@
 install_with_root: true
 terminal_casks: []
 pkgs: []
+contexts: {}

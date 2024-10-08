@@ -1,7 +1,0 @@
-[user]
-	email = morten.olsen@zeronorth.com
-	name = Morten Olsen
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDbZITpz5QrVIxPn9gKVWMPK+3W3YZZGszFOQvO/h7M
-
-[url "git@github-zeronorth:"]
-	insteadOf = https://github.com/

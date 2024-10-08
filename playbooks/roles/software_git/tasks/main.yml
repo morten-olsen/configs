@@ -1,6 +1,7 @@
 ---
 - name: Install dependencies
   tags:
+    - git
     - install
   become: "{{ install_with_root }}"
   ansible.builtin.package:
@@ -10,6 +11,7 @@
 
 - name: Copy config
   tags:
+    - git
     - config
   ansible.builtin.file:
     mode: "{{ item.mode }}"
@@ -21,21 +23,9 @@
     label: "{{ item.path }}"
   when: item.state == 'directory'
 
-- name: "Copy templates"
+- name: "Copy configs"
   tags:
-    - config
-  ansible.builtin.template:
-    src: "{{ item.src }}"
-    dest: "{{ home }}/{{ item.path | regex_replace('\\.j2$', '') }}"
-    mode: "{{ item.mode }}"
-  with_community.general.filetree:
-    - ../templates
-  loop_control:
-    label: "{{ item.path }}"
-  when: item.state == 'file'
-
-- name: Copy config
-  tags:
+    - git
     - config
   ansible.builtin.copy:
     src: "{{ item.src }}"
@@ -46,3 +36,24 @@
   loop_control:
     label: "{{ item.path }}"
   when: item.state == 'file'
+
+- name: Setup config
+  tags:
+    - git
+    - config
+  ansible.builtin.template:
+    src: "../templates/gitconfig.j2"
+    dest: "{{ home }}/.gitconfig"
+    mode: "644"
+
+- name: Setup contexts
+  tags:
+    - git
+    - config
+  include_tasks: "setup-context.yml"
+  vars:
+    name: "{{ item.key }}"
+    context: "{{ item.value }}"
+  loop: "{{ contexts | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"

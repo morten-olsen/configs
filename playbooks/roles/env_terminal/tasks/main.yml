@@ -1,22 +1,28 @@
 ---
-- name: Install context dependencies
-  ansible.builtin.include_tasks: install.yml
-  loop: "{{ contexts }}"
-  loop_control:
-    loop_var: context
-  tags:
-    - config
-
-- name: Install atuin
+- name: "Load vars"
+  ansible.builtin.include_vars: "{{ item }}"
   tags:
     - install
-  ansible.builtin.include_role:
-    name: software_atuin
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yml
+      paths: ../vars
+      skip: true
 
-- name: Configure contexts
-  ansible.builtin.include_tasks: config.yml
-  loop: "{{ contexts }}"
-  loop_control:
-    loop_var: context
+- name: "Install dependencies"
   tags:
-    - config
+    - install
+  when: terminal_pkgs
+  ansible.builtin.package:
+    name: "{{ terminal_pkgs }}"
+
+- name: "Install casks"
+  tags:
+    - install
+  when: terminal_casks
+  community.general.homebrew_cask:
+    name: "{{ terminal_casks }}"
+    state: installed

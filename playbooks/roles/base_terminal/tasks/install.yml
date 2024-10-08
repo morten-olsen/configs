@@ -20,7 +20,7 @@
   ansible.builtin.package:
     name: "{{ terminal_pkgs }}"
 
-- name: "Install casks : {{ context }}"
+- name: "Install casks"
   tags:
     - install
   when: terminal_casks

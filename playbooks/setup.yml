@@ -5,7 +5,7 @@
     - role: env_terminal
     - role: env_develop
     - role: server_ssh
-    - role: env_desktop
+    # - role: env_desktop
 
 - name: Setup android
   hosts: android
