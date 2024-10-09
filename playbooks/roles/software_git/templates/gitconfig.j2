@@ -41,8 +41,8 @@
 
 {% for key in contexts %}
 {% if 'git' in contexts[key] %}
-[includeIf "gitdir:{{ contexts[key].path }}/"]
-  path = {{ contexts[key].path }}/.gitconfig
+[includeIf "gitdir:{{ home }}/{{ contexts[key].path }}/"]
+  path = "{{ home }}/{{ contexts[key].path }}/.gitconfig"
 {% endif %}
 {% endfor %}
 

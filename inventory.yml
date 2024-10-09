@@ -14,7 +14,7 @@ desktops:
   vars:
     contexts:
       private:
-        path: ~/Projects/private
+        path: Projects/private
         git:
           email: fbtijfdq@void.black
           name: Morten Olsen
@@ -24,7 +24,7 @@ desktops:
               instead_of: "ssh://git@gitea.olsen.cloud:2202/"
 
       zeronorth:
-        path: ~/Projects/zeronorth
+        path: Projects/zeronorth
         env:
           NODE_AUTH_TOKEN: "op://jpksggxxmcuwnbwkooktr3iqcy/ut3yag6r7y4bsfrztahp7pcc6q/password"
           AWS_PROFILE: "zeronorth"
