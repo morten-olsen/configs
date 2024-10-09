@@ -4,7 +4,7 @@ desktop_hyprland_pkgs:
   - hyprlock
   - swaybg
   - wofi
+  - firefox
 desktop_hyprland_flatpak:
-  - org.mozilla.firefox
   - com.spotify.Client
   - com.github.iwalton3.jellyfin-media-player
