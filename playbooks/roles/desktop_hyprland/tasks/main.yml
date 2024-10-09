@@ -1,0 +1,44 @@
+---
+- name: "Load vars"
+  ansible.builtin.include_vars: "{{ item }}"
+  tags:
+    - install
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yml
+      paths: ../vars
+      skip: true
+
+- name: "Install dependencies"
+  tags:
+    - install
+  when: desktop_hyprland_pkgs
+  become: "{{ install_with_root }}"
+  ansible.builtin.package:
+    name: "{{ desktop_hyprland_pkgs }}"
+
+- name: "Ensure dir"
+  tags:
+    - config
+  ansible.builtin.file:
+    path: "{{ home }}/.config/hypr"
+    state: directory
+    mode: "0700"
+    owner: "{{ username }}"
+
+- name: "Copy templates"
+  tags:
+    - config
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ home }}/.config/hypr/{{ item.path | regex_replace('\\.j2$', '') }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ username }}"
+  with_community.general.filetree:
+    - ../templates
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file'

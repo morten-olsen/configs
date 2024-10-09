@@ -1,0 +1,5 @@
+---
+desktop_hyprland_pkgs:
+  - hyprland
+  - hyprlock
+  - swaybg
