@@ -15,7 +15,7 @@
 - name: "Install dependencies"
   tags:
     - install
-  when: desktop_kitty_pks
+  when: desktop_kitty_pkgs
   become: "{{ install_with_root }}"
   ansible.builtin.package:
     name: "{{ desktop_kitty_pkgs }}"
@@ -23,8 +23,9 @@
 - name: "Ensure dir"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
-    path: "{{ home }}/.config/dunst"
+    path: "{{ home }}/.config/kitty"
     state: directory
     mode: "0700"
     owner: "{{ username }}"
@@ -32,6 +33,7 @@
 - name: "Copy templates"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ home }}/.config/kitty/{{ item.path | regex_replace('\\.j2$', '') }}"

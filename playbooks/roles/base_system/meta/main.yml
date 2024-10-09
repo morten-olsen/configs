@@ -1,2 +1,4 @@
 dependencies:
   - role: base_info
+collections:
+  - kewlfft.aur

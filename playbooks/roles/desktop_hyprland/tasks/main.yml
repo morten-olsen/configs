@@ -20,9 +20,18 @@
   ansible.builtin.package:
     name: "{{ desktop_hyprland_pkgs }}"
 
+- name: "Install flatpak"
+  tags:
+    - install
+  when: desktop_hyprland_flatpak
+  become: "{{ install_with_root }}"
+  community.general.flatpak:
+    name: "{{ desktop_hyprland_flatpak }}"
+
 - name: "Ensure dir"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     path: "{{ home }}/.config/hypr"
     state: directory
@@ -32,6 +41,7 @@
 - name: "Copy templates"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ home }}/.config/hypr/{{ item.path | regex_replace('\\.j2$', '') }}"

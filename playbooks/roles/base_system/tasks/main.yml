@@ -23,3 +23,15 @@
     path: "{{ home }}"
     state: directory
     owner: "{{ username }}"
+
+- name: Install yay
+  tags:
+    - install
+  when: archlinux
+  include_tasks: yay.yml
+
+- name: Install flatpak
+  tags:
+    - install
+  when: archlinux
+  include_tasks: flatpak.yml

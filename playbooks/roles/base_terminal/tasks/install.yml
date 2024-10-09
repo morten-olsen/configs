@@ -27,3 +27,12 @@
   community.general.homebrew_cask:
     name: "{{ terminal_casks }}"
     state: installed
+
+- name: "Install aur"
+  tags:
+    - install
+  when: terminal_aur
+  become: yes
+  become_user: aur_builder
+  aur:
+    name: "{{ terminal_aur }}"

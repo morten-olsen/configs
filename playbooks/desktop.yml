@@ -1,0 +1,8 @@
+---
+- name: Setup host
+  hosts: all
+  tasks:
+  roles:
+    - env_terminal
+    - env_develop
+    - desktop_hyprland

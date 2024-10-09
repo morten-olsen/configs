@@ -1,4 +1,5 @@
 install_with_root: true
 terminal_casks: []
-pkgs: []
+terminal_pkgs: []
+terminal_aur: []
 contexts: {}

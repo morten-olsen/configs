@@ -1,5 +1,6 @@
 - name: Download starship
   tags: always
+  become: "{{ use_become }}"
   ansible.builtin.get_url:
     mode: "0600"
     url: "{{ software_starship_download_url }}"
@@ -7,6 +8,7 @@
 
 - name: Create dir
   tags: always
+  become: "{{ use_become }}"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ software_starship_unpack_dir }}"
@@ -14,12 +16,15 @@
 
 - name: Extract starship
   tags: always
+  become: "{{ use_become }}"
   ansible.builtin.unarchive:
+    remote_src: true
     src: "{{ software_starship_download_dir }}"
     dest: "{{ software_starship_unpack_dir }}"
 
 - name: Ensure dir
   tags: always
+  become: "{{ use_become }}"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ home }}/.local/bin"
@@ -28,6 +33,7 @@
 
 - name: Move bin
   tags: always
+  become: "{{ use_become }}"
   ansible.builtin.copy:
     remote_src: true
     mode: "0755"

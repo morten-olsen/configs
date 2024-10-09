@@ -13,6 +13,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
@@ -28,6 +29,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ home }}/{{ item.path }}"
@@ -43,6 +45,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "../templates/gitconfig.j2"
     dest: "{{ home }}/.gitconfig"

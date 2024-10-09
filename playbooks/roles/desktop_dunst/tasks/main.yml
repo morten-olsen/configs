@@ -23,6 +23,7 @@
 - name: "Ensure dir"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     path: "{{ home }}/.config/dunst"
     state: directory
@@ -32,6 +33,7 @@
 - name: "Copy templates"
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ home }}/.config/dunst/{{ item.path | regex_replace('\\.j2$', '') }}"

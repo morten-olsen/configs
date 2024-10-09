@@ -1,5 +1,6 @@
 ---
 - name: Ensure dir
+  become: "{{ use_become }}"
   tags:
     - config
   ansible.builtin.file:
@@ -9,6 +10,7 @@
     state: directory
 
 - name: Setup config
+  become: "{{ use_become }}"
   tags:
     - config
   ansible.builtin.template:

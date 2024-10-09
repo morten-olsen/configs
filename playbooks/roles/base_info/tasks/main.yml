@@ -1,3 +1,10 @@
+---
+- name: Info
+  debug:
+    msg:
+      ansible_os_family: "{{ ansible_os_family }}"
+      ansible_distribution: "{{ ansible_distribution }}"
+
 - name: Setting generic facts
   tags: always
   ansible.builtin.set_fact:
@@ -5,6 +12,7 @@
     home: "/home/alice"
     use_become: true
     mac_os: "{{ ansible_distribution == 'MacOSX' }}"
+    archlinux: "{{ ansible_distribution == 'Archlinux' }}"
 
 - name: Setting macos facts
   tags: always

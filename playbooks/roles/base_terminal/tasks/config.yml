@@ -2,6 +2,7 @@
 - name: Setup directories
   tags:
     - config
+  become: true
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
@@ -14,6 +15,7 @@
   when: item.state == 'directory'
 
 - name: Copy config
+  become: true
   tags:
     - config
   ansible.builtin.copy:

@@ -1,0 +1,27 @@
+---
+- name: Install dependencies
+  tags:
+    - install
+  become: "{{ use_become }}"
+  ansible.builtin.package:
+    name: flatpak
+
+- name: Add the flathub flatpak repository remote to the user installation
+  become: "{{ use_become }}"
+  become_user: "{{ username }}"
+  tags:
+    - config
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Add the flathub flatpak repository remote
+  tags:
+    - config
+  become: "{{ use_become }}"
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo

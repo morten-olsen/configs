@@ -2,6 +2,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "../templates/gitconfig.context.j2"
     dest: "{{ context.path }}/.gitconfig"
@@ -16,6 +17,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     path: "{{ context.path }}"
     state: directory
@@ -26,6 +28,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.template:
     src: "../templates/sshconfig.context.j2"
     dest: "{{ home }}/.ssh/config.d/git-{{ name }}"
@@ -39,6 +42,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     path: "{{ home }}/.ssh/keys"
     state: directory
@@ -49,6 +53,7 @@
   tags:
     - git
     - config
+  become: "{{ use_become }}"
   ansible.builtin.copy:
     content: "{{ context.git.signing_key }}"
     dest: "{{ home }}/.ssh/keys/github-{{ name }}.pub"

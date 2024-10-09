@@ -18,19 +18,20 @@
     repo: https://github.com/nvm-sh/nvm
     dest: "{{ home }}/.nvm"
 
-- name: Install node and set version
-  tags:
-    - config
-  become_user: "{{ username }}"
-  register: nodeinstall
-  ansible.builtin.shell: source {{ home }}/.nvm/nvm.sh && nvm install 22
-  changed_when: "'is already installed' not in nodeinstall.stderr"
-  args:
-    executable: /bin/bash
+# - name: Install node and set version
+#   tags:
+#     - config
+#   become_user: "{{ username }}"
+#   register: nodeinstall
+#   ansible.builtin.shell: source {{ home }}/.nvm/nvm.sh && nvm install 22
+#   changed_when: "'is already installed' not in nodeinstall.stderr"
+#   args:
+#     executable: /bin/bash
 
 - name: Setup config dirctories
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.file:
     mode: "{{ item.mode }}"
     path: "{{ home }}/{{ item.path }}"
@@ -45,6 +46,7 @@
 - name: Copy config {{ context }}
   tags:
     - config
+  become: "{{ use_become }}"
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ home }}/{{ item.path }}"

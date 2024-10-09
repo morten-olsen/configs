@@ -1,0 +1,15 @@
+---
+terminal_pkgs:
+  - bat
+  - eza
+  - direnv
+  - fzf
+  - gnupg
+  - jq
+  - ripgrep
+  - neovim
+  - tmux
+  - zoxide
+  - sshpass
+terminal_aur:
+  - gh

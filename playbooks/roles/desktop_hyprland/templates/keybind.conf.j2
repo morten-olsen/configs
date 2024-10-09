@@ -4,8 +4,7 @@ $browser = firefox
 bind = SUPER, Return, exec, $term
 bind = SUPER SHIFT, Return, exec, $browser
 bind = SUPER, E, exec, $files
-bind = SUPER, D, exec, killall rofi || rofi -show drun -theme ~/.config/rofi/config.rasi
-bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.config/rofi/global/emoji
+bind = SUPER, D, exec, killall wofi || wofi -show drun
 bind = SUPER SHIFT, B, exec, killall -SIGUSR2 waybar # Reload waybar
 bind = SUPER, B, exec, killall -SIGUSR1 waybar # Hide waybar
 
@@ -86,4 +85,4 @@ bind = SUPER, mouse_up, workspace, e-1
 binde = ,XF86MonBrightnessDown, exec, brightnessctl set 10%-
 binde = ,XF86MonBrightnessUp, exec, brightnessctl set 10%+
 
-bind = SUPER, L, exec, systemctl suspend
+bind = SUPER CTRL, L, exec, systemctl suspend
