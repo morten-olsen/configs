@@ -1,7 +1,7 @@
 FROM fedora
 RUN dnf update -y && dnf install -y \
   ansible
-WORKDIR /opt/setuo
+WORKDIR /opt/setup
 COPY ./requirements.yml /opt/setup
 RUN ansible-galaxy collection install -r requirements.yml
 COPY . /opt/setup
