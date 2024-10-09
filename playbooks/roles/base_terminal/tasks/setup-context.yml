@@ -1,6 +1,14 @@
+- name: Ensure dir
+  tags:
+    - config
+  ansible.builtin.file:
+    path: "{{ context.path }}"
+    state: directory
+    owner: "{{ username }}"
+    mode: "700"
+
 - name: Setup context env
   tags:
-    - git
     - config
   ansible.builtin.template:
     src: "../templates/envrc.context.j2"

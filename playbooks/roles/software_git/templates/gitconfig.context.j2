@@ -11,7 +11,12 @@
   format = ssh
 
 [gpg "ssh"]
+{% if mac_os %}
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+{% else %}
+  program = "/opt/1Password/op-ssh-sign"
+{% endif %}
+
 {% endif %}
 
 {% if 'replacements' in git %}

@@ -15,6 +15,7 @@
 - name: "Install dependencies"
   tags:
     - install
+  become: "{{ install_with_root }}"
   when: env_develop_pkgs
   ansible.builtin.package:
     name: "{{ env_develop_pkgs }}"

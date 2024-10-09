@@ -5,6 +5,10 @@ Include ~/.ssh/config.d/*
 Host *
   Controlmaster auto
   Controlpath /tmp/ssh-%r@%h:%p
+  {% if mac_os %}
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  {% else %}
+  IdentityAgent ~/.1password/agent.sock
+  {% endif %}
   ForwardAgent yes
 

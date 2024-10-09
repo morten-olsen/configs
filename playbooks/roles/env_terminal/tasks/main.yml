@@ -13,6 +13,7 @@
       skip: true
 
 - name: "Install dependencies"
+  become: "{{ install_with_root }}"
   tags:
     - install
   when: terminal_pkgs

@@ -1,5 +1,6 @@
 ---
 - name: Install dependencies
+  become: "{{ install_with_root }}"
   ansible.builtin.package:
     name:
       - git

@@ -2,6 +2,7 @@
 - name: Install dependencies
   tags:
     - install
+  become: "{{ install_with_root }}"
   ansible.builtin.package:
     name:
       - neovim

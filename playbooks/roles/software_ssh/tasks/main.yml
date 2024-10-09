@@ -1,29 +1,18 @@
-- name: Copy config
+---
+- name: Ensure dir
   tags:
-    - git
     - config
   ansible.builtin.file:
-    mode: "{{ item.mode }}"
-    path: "{{ home }}/{{ item.path }}"
+    path: "{{ home }}/.ssh"
+    mode: "0700"
     owner: "{{ username }}"
     state: directory
-  with_community.general.filetree:
-    - ../files
-  loop_control:
-    label: "{{ item.path }}"
-  when: item.state == 'directory'
 
-- name: "Copy configs"
+- name: Setup config
   tags:
-    - git
     - config
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ home }}/{{ item.path }}"
-    mode: "{{ item.mode }}"
+  ansible.builtin.template:
+    src: "../templates/config.j2"
+    dest: "{{ home }}/.ssh/config"
     owner: "{{ username }}"
-  with_community.general.filetree:
-    - ../files
-  loop_control:
-    label: "{{ item.path }}"
-  when: item.state == 'file'
+    mode: "644"
