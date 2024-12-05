@@ -1,0 +1,14 @@
+---
+- name: "Copy scripts"
+  tags:
+    - config
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ home }}/.local/bin/{{ item.path }}"
+    mode: "0755"
+    owner: "{{ username }}"
+  with_community.general.filetree:
+    - ../files
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file'

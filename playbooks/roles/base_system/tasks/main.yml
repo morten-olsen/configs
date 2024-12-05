@@ -13,6 +13,7 @@
   ansible.builtin.user:
     name: "{{ username }}"
     update_password: "on_create"
+    password: "{{ 'iamroot' | password_hash('sha512') }}"
     create_home: yes
     group: "{{ username }}"
 
@@ -35,3 +36,11 @@
     - install
   when: archlinux
   include_tasks: flatpak.yml
+
+- name: Setup sudo
+  when: not mac_os
+  include_tasks: sudo.yml
+
+- name: Setup firewall
+  when: not mac_os
+  include_tasks: firewall.yml

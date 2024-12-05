@@ -40,3 +40,21 @@
   loop_control:
     label: "{{ item.path }}"
   when: item.state == 'file'
+
+- name: Install ssh server
+  when: not mac_os
+  tags:
+    - install
+  ansible.builtin.package:
+    name:
+      - openssh-server
+
+- name: Disable password authentication for root
+  tags:
+    - config
+  when: not mac_os
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: "^#?PermitRootLogin"
+    line: "PermitRootLogin prohibit-password"

@@ -9,3 +9,4 @@ dependencies:
   - role: software_nvm
   - role: software_nvim
   - role: software_atuin
+  - role: software_scripts

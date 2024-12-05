@@ -1,0 +1,20 @@
+- name: Install firewall
+  tags:
+    - install
+  ansible.builtin.package:
+    name:
+      - ufw
+
+- name: UFW - Allow SSH connections
+  tags:
+    - config
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: UFW - Enable and deny by default
+  tags:
+    - config
+  community.general.ufw:
+    state: enabled
+    default: deny

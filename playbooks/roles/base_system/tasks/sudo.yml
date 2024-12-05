@@ -1,0 +1,13 @@
+- name: Install sudo
+  become: true
+  ansible.builtin.package:
+    name: sudo
+
+- name: Allow sudo access
+  become: true
+  community.general.sudoers:
+    name: "sudo-for-{{ username }}"
+    state: present
+    user: "{{ username }}"
+    commands: ALL
+    nopassword: false
