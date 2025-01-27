@@ -4,7 +4,7 @@ $browser = firefox
 bind = SUPER, Return, exec, $term
 bind = SUPER SHIFT, Return, exec, $browser
 bind = SUPER, E, exec, $files
-bind = SUPER, D, exec, killall wofi || wofi -show drun
+bind = SUPER, D, exec, killall wofi || wofi --show drun
 bind = SUPER SHIFT, B, exec, killall -SIGUSR2 waybar # Reload waybar
 bind = SUPER, B, exec, killall -SIGUSR1 waybar # Hide waybar
 

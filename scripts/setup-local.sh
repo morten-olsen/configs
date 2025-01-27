@@ -2,7 +2,7 @@
 export ROOT="`dirname "$0"`/.."
 MACHINE_NAME="$1"; shift
 
-. $ROOT/scripts/with-env.sh
+# . $ROOT/scripts/with-env.sh
 
 if [ -z "$MACHINE_NAME" ]; then
 	echo "Usage: $0 <machine-name>"
